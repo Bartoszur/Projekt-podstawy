@@ -53,3 +53,12 @@ dkms.conf
 
 # debug information files
 *.dwo
+
+.vs/
+x64/
+Debug/
+Release/
+*.user
+*.suo
+*.db
+*.opendb

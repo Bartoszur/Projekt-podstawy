@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="GildiaApp/GildiaApp.vcxproj" Id="eb03af75-b5f6-46d6-adf4-96cf0e907750" />
+</Solution>
