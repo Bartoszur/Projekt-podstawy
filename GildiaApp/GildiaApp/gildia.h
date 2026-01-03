@@ -3,40 +3,48 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-enum Klasa {
+typedef enum Klasa {
 	WOJOWNIK,
 	MAG,
 	KAPLAN,
 	LOTRZYK,
 	LOWCA,
 	DRUID
-};
+} Klasa;
 
-enum Rasa {
+typedef enum Rasa {
 	CZLOWIEK,
 	ELF,
-	KRASNALUD,
+	KRASNOLUD,
 	MUTANT,
 	ORK
-};
+} Rasa;
 
-enum Status {
+typedef enum Status {
 	AKTYWNY,
 	NA_MISJI,
 	RANNY,
 	ZAGINIONY,
 	ZAWIESZONY
-};
+} Status;
 
-
-struct Bohater {
+typedef struct {
 	char imie[100];
-	enum Rasa rasa;
-	enum Klasa klasa;
+	Rasa rasa;
+	Klasa klasa;
 	int poziom;
 	int reputacja;
-	enum Status status;
-	struct Bohater* nastepny;
-};
+	Status status;
+} DaneBohatera;
+
+typedef struct ElementListy {
+	DaneBohatera dane;
+	struct ElementListy* nastepny;
+} Bohater;
+
+void dodajBohatera(Bohater** head);
+
+void zapiszRejestr(Bohater* head);
+
 
 #endif

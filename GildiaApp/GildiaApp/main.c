@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "gildia.h"
+#include "narzedzia.h"
 
 void przywitanie() {
 	printf("Witaj w rejestrze Gildii Poszukiwaczy Przygod!\n");
@@ -15,7 +16,7 @@ void wyswietlMenu() {
 	printf("5. Usun bohatera z rejestru.\n");
 	printf("6. Sortuj rejestr.\n");
 	printf("7. Zapisz i wyjdz\n");
-	printf("-------------------------------------\n");
+	printf("------------------------------------\n");
 }
 
 int pobierzWybor() {
@@ -36,15 +37,18 @@ int pobierzWybor() {
 int main() {
 	int running = 1;
 	int wybor;
+	Bohater* rejestr = NULL;
 
 	przywitanie();
 	
 	while (running) {
 		wyswietlMenu();
 		wybor = pobierzWybor();
+
 		switch (wybor) {
 			case 1: {
 				printf("dodawanie nowego bohatera...\n");
+				dodajBohatera(&rejestr);
 				break;
 			}
 			case 2: {
@@ -68,6 +72,7 @@ int main() {
 				break;
 			}
 			case 7: {
+				zapiszRejestr(rejestr);
 				printf("Zapisano rejestr...");
 				running = 0;
 				break;
