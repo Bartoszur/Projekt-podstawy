@@ -16,7 +16,7 @@ typedef enum Rasa {
 	CZLOWIEK,
 	ELF,
 	KRASNOLUD,
-	MUTANT,
+	DEMON,
 	ORK
 } Rasa;
 
@@ -30,8 +30,8 @@ typedef enum Status {
 
 typedef struct {
 	char imie[100];
-	Rasa rasa;
 	Klasa klasa;
+	Rasa rasa;
 	int poziom;
 	int reputacja;
 	Status status;
@@ -45,6 +45,10 @@ typedef struct ElementListy {
 void dodajBohatera(Bohater** head);
 
 void zapiszRejestr(Bohater* head);
+
+void wyswietlRejestr(Bohater* head);
+
+void wczytajPlik(Bohater** head);
 
 
 #endif

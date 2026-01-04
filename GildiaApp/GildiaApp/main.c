@@ -39,6 +39,8 @@ int main() {
 	int wybor;
 	Bohater* rejestr = NULL;
 
+	wczytajPlik(&rejestr);
+
 	przywitanie();
 	
 	while (running) {
@@ -52,7 +54,7 @@ int main() {
 				break;
 			}
 			case 2: {
-				printf("wyswietlanie rejestru...\n");
+				wyswietlRejestr(rejestr);
 				break;
 			}
 			case 3: {

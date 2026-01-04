@@ -1,5 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "narzedzia.h"
+#include "gildia.h"
 #include <ctype.h>
 #include <string.h>
 #include <stdbool.h>
@@ -13,6 +14,18 @@ int czyPoprawneImie(const char* nazwa) {
 		if (!isalpha(nazwa[i]) && nazwa[i] != ' ') {
 			return 0;
 		}
+	}
+	return 1;
+}
+
+int czyUnikalne(Bohater* head, const char* nazwa) {
+	Bohater* current = head;
+
+	while (current != NULL) {
+		if(strcmp(current->dane.imie, nazwa) == 0) {
+			return 0;
+		}
+		current = current->nastepny;
 	}
 	return 1;
 }
@@ -40,4 +53,26 @@ int wczytajLiczbe(int min, int max) {
 			while (getchar() != '\n');
 		}
 	}
+}
+
+const char* ocenReputacje(int punkty) {
+	if (punkty <= 0) {
+		return "Zloczonyca";
+	}
+	if (punkty < 20) {
+		return "Niebezpieczny";
+	}
+	if (punkty < 40) {
+		return "Podejrzany";
+	}
+	if (punkty < 60) {
+		return "Neutralny";
+	}
+	if (punkty < 80) {
+		return "Przyjazny";
+	}
+	if (punkty < 100) {
+		return "Bohater";
+	}
+	return "Legenda";
 }
