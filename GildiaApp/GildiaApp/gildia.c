@@ -282,11 +282,29 @@ void modyfikacjaBohatera(Bohater* head) {
 				break;
 			}
 			case 3: {
-				printf("")
+				printf("Podaj nowy poziom (1-100): ");
+				current->dane.poziom = wczytajLiczbe(1, 100);
+				printf("---> Zmieniono rase.\n");
+				break;
+			}
+			case 4: {
+				printf("Podaj nowe punkty reputacji (-50 do 150): ");
+				current->dane.reputacja = wczytajLiczbe(-50, 150);
+				printf("---> Zmieniono poziom reputacji.\n");
+				break;
+			}
+			case 5: {
+				printf("Podaj nowy status bohatera (0-AKTYWNY, 1-NA MISJI, 2-RANNY, 3-ZAGINIONY, 4-ZAWIESZONY): ");
+				current->dane.status = wczytajLiczbe(0, 4);
+				printf("---> Zmieniono status bohatera.\n");
+				break;
+			}
+			case 0: {
+				printf("Koniec edycji bohatera.\n");
+				edycja = 0;
+				break;
 			}
 		}
-
-
 
 	}
 

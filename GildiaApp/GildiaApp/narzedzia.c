@@ -56,7 +56,7 @@ int wczytajLiczbe(int min, int max) {
 }
 
 const char* ocenReputacje(int punkty) {
-	if (punkty <= 0) {
+	if (punkty <= -20) {
 		return "Zloczonyca";
 	}
 	if (punkty < 20) {
@@ -71,7 +71,7 @@ const char* ocenReputacje(int punkty) {
 	if (punkty < 80) {
 		return "Przyjazny";
 	}
-	if (punkty < 100) {
+	if (punkty < 120) {
 		return "Bohater";
 	}
 	return "Legenda";
