@@ -58,7 +58,26 @@ int main() {
 				break;
 			}
 			case 3: {
-				printf("wyszukiwanie...");
+				if (rejestr == NULL) {
+					printf("Brak danych do przeszukania.\n");
+				}
+				else {
+					int n = -1;
+					printf("\n-------------------------------------\n");
+					printf("1 - wyszukaj wedlug imienia.\n");
+					printf("2 - wyszukaj wedlug poziomu.\n");
+					printf("Twoj wybor: ");
+					scanf("%d", &n);
+					if (n == 1) {
+						wyszukajImie(rejestr);
+					}
+					else if (n == 2) {
+						wyszukajPoziom(rejestr);
+					}
+					else {
+						printf("Niepoprawna opcja.\n");
+					}
+				}
 				break;
 			}
 			case 4: {

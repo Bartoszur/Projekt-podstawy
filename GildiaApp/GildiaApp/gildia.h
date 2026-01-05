@@ -50,5 +50,9 @@ void wyswietlRejestr(Bohater* head);
 
 void wczytajPlik(Bohater** head);
 
+void wyszukajImie(Bohater* head);
+
+void wyszukajPoziom(Bohater* head);
+
 
 #endif

@@ -76,3 +76,16 @@ const char* ocenReputacje(int punkty) {
 	}
 	return "Legenda";
 }
+
+int czyPoprawneWyszukanie(const char* tekst) {
+	if (tekst == NULL) {
+		printf("Prosze wpisac poczatek, badz cale imie: ");
+		return 0;
+	}
+	for (int i = 0; tekst[i] != '\0'; i++) {
+		if (!isalpha(tekst[i]) && tekst[i] != ' ') {
+			return 0;
+		}
+	}
+	return 1;
+}

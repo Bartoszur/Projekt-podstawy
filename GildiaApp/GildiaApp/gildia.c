@@ -140,3 +140,67 @@ void wczytajPlik(Bohater** head) {
 	fclose(f);
 	printf("--> Wczytano dane z pliku 'Rejestr.txt'.\n");
 }
+
+void wyszukajImie(Bohater* head) {
+	if (head == NULL) {
+		printf("Lista jest pusta.\n");
+		return;
+	}
+	
+	char szukane[100];
+	printf("Wpisz poczatek imienia bohatera: ");
+	scanf("%99s", szukane);
+	while (czyPoprawneWyszukanie(szukane) == 0) {
+		printf("Prosze wpisac poczatek, badz cale imie bohatera: ");
+	}
+
+	int dlugosc = strlen(szukane);
+	int znalezione = 0;
+
+	Bohater* current = head;
+	int nr = 1;
+
+	while (current != NULL) {
+
+		if (strncmp(current->dane.imie, szukane, dlugosc) == 0) {
+			printf("%d %s\n", nr, current->dane.imie);
+			znalezione = 1;
+		}
+		current = current->nastepny;
+		nr++;
+	}
+
+	if (znalezione == 0) {
+		printf("Brak wynikow dla imienia: %s", szukane);
+	}
+	
+}
+
+void wyszukajPoziom(Bohater* head) {
+	if (head == NULL) {
+		printf("Lista jest pusta.\n");
+		return;
+	}
+
+	int szukane;
+	printf("Jaki poziom chcesz wyszukac (1-100): ");
+	szukane = wczytajLiczbe(0, 100);
+
+
+	int znalezione = 0;
+	Bohater* current = head;
+	int nr = 1;
+
+	while (current != NULL) {
+		if (current->dane.poziom == szukane) {
+			printf("%d %s poziom - %d\n", nr, current->dane.imie, szukane);
+			znalezione = 1;
+		}
+		current = current->nastepny;
+		nr++;
+	}
+
+	if (znalezione == 0) {
+		printf("Brak bohaterow na %d poziomie.\n", szukane);
+	}
+}

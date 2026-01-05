@@ -11,5 +11,6 @@ int wczytajLiczbe(int min, int max);
 
 const char* ocenReputacje(int punkty);
 
+int czyPoprawneWyszukanie(const char* tekst);
 
 #endif
