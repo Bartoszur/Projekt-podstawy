@@ -13,4 +13,6 @@ const char* ocenReputacje(int punkty);
 
 int czyPoprawneWyszukanie(const char* tekst);
 
+void wyczyscBufor(void);
+
 #endif

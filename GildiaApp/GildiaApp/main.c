@@ -63,25 +63,21 @@ int main() {
 				}
 				else {
 					int n = -1;
-					printf("\n-------------------------------------\n");
 					printf("1 - wyszukaj wedlug imienia.\n");
 					printf("2 - wyszukaj wedlug poziomu.\n");
 					printf("Twoj wybor: ");
-					scanf("%d", &n);
+					n = wczytajLiczbe(1, 2);
 					if (n == 1) {
 						wyszukajImie(rejestr);
 					}
 					else if (n == 2) {
 						wyszukajPoziom(rejestr);
 					}
-					else {
-						printf("Niepoprawna opcja.\n");
-					}
 				}
 				break;
 			}
 			case 4: {
-				printf("Modyfikowanie...");
+				modyfikacjaBohatera(rejestr);
 				break;
 			}
 			case 5: {

@@ -54,5 +54,7 @@ void wyszukajImie(Bohater* head);
 
 void wyszukajPoziom(Bohater* head);
 
+void modyfikacjaBohatera(Bohater* head);
+
 
 #endif

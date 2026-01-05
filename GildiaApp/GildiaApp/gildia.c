@@ -148,10 +148,20 @@ void wyszukajImie(Bohater* head) {
 	}
 	
 	char szukane[100];
+	wyczyscBufor();
+
 	printf("Wpisz poczatek imienia bohatera: ");
-	scanf("%99s", szukane);
+
+	if (fgets(szukane, sizeof(szukane), stdin) != NULL) {
+		szukane[strcspn(szukane, "\n")] = 0; 
+	}
+
 	while (czyPoprawneWyszukanie(szukane) == 0) {
 		printf("Prosze wpisac poczatek, badz cale imie bohatera: ");
+
+		if (fgets(szukane, sizeof(szukane), stdin) != NULL) {
+			szukane[strcspn(szukane, "\n")] = 0;
+		}
 	}
 
 	int dlugosc = strlen(szukane);
@@ -203,4 +213,81 @@ void wyszukajPoziom(Bohater* head) {
 	if (znalezione == 0) {
 		printf("Brak bohaterow na %d poziomie.\n", szukane);
 	}
+}
+
+void modyfikacjaBohatera(Bohater* head) {
+	if (head == NULL) {
+		printf("Lista jest pusta.\n");
+		return;
+	}
+
+	Bohater* current = head;
+
+	int modyfikacja = 0;
+
+	wyczyscBufor();
+	char szukane[100];
+	printf("Podaj pelne imie bohatera do modyfikacji: ");
+
+	if (fgets(szukane, sizeof(szukane), stdin) != NULL) {
+		szukane[strcspn(szukane, "\n")] = 0;
+	}
+	while (czyPoprawneImie(szukane) == 0) {
+		printf("Blad! Imie musi miec min. 4 znaki i same litery.\n");
+
+		if (fgets(szukane, sizeof(szukane), stdin) != NULL) {
+			szukane[strcspn(szukane, "\n")] = 0;
+		}
+	}
+
+	while (current != NULL) {
+		if (strcmp(current->dane.imie, szukane) == 0) {
+			modyfikacja = 1;
+			break;
+		}
+		current = current->nastepny;
+	}
+
+	if (modyfikacja == 0) {
+		printf("Brak bohaterow o podanym imieniu.\n");
+		return;
+	}
+
+	int edycja = 1;
+	int wybor;
+	while (edycja) {
+		printf("\n--- MODYFIKACJA BOHATERA %s ---\n", current->dane.imie);
+		printf("Co chcesz zmienic?\n");
+		printf("1. Klase\n");
+		printf("2. Rase\n");
+		printf("3. Poziom\n");
+		printf("4. Reputacja\n");
+		printf("5. Status\n");
+		printf("0. Zakoncz edycje\n");
+		printf("Twoj wybor: ");
+
+		wybor = wczytajLiczbe(0, 5);
+
+		switch (wybor) {
+			case 1: {
+				printf("Wybierz nowa klase 0-WOJOWNIK\n 1-MAG\n 2-KAPLAN\n 3-LOTR\n 4-LOWCA\n 5-DRUID\n");
+				current->dane.klasa = wczytajLiczbe(0, 5);
+				printf("---> Zmieniono klase.\n");
+				break;
+			}
+			case 2: {
+				printf("Wybierz nowa rase (0-CZLOWIEK, 1-ELF, 2-KRASNOLUD, 3-DEMON, 4-ORK): ");
+				current->dane.rasa = wczytajLiczbe(0, 4);
+				printf("---> Zmieniono rase.\n");
+				break;
+			}
+			case 3: {
+				printf("")
+			}
+		}
+
+
+
+	}
+
 }

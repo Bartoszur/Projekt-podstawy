@@ -89,3 +89,8 @@ int czyPoprawneWyszukanie(const char* tekst) {
 	}
 	return 1;
 }
+
+void wyczyscBufor(void) {
+	int c;
+	while ((c = getchar()) != '\n' && c != EOF);
+}
