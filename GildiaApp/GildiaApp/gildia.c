@@ -148,7 +148,6 @@ void wyszukajImie(Bohater* head) {
 	}
 	
 	char szukane[100];
-	wyczyscBufor();
 
 	printf("Wpisz poczatek imienia bohatera: ");
 
@@ -225,7 +224,6 @@ void modyfikacjaBohatera(Bohater* head) {
 
 	int modyfikacja = 0;
 
-	wyczyscBufor();
 	char szukane[100];
 	printf("Podaj pelne imie bohatera do modyfikacji: ");
 
@@ -233,7 +231,7 @@ void modyfikacjaBohatera(Bohater* head) {
 		szukane[strcspn(szukane, "\n")] = 0;
 	}
 	while (czyPoprawneImie(szukane) == 0) {
-		printf("Blad! Imie musi miec min. 4 znaki i same litery.\n");
+		printf("Blad! Imie musi miec min. 4 znaki i same litery: ");
 
 		if (fgets(szukane, sizeof(szukane), stdin) != NULL) {
 			szukane[strcspn(szukane, "\n")] = 0;
@@ -284,7 +282,7 @@ void modyfikacjaBohatera(Bohater* head) {
 			case 3: {
 				printf("Podaj nowy poziom (1-100): ");
 				current->dane.poziom = wczytajLiczbe(1, 100);
-				printf("---> Zmieniono rase.\n");
+				printf("---> Zmieniono poziom.\n");
 				break;
 			}
 			case 4: {
@@ -307,5 +305,52 @@ void modyfikacjaBohatera(Bohater* head) {
 		}
 
 	}
+}
 
+void usunBohatera(Bohater** head) {
+	if (head == NULL || *head == NULL) {
+		printf("Lista  jest pusta.\n");
+		return;
+	}
+
+	char szukane[100];
+	int zgodne = 0;
+	printf("Podaj imie bohatera, ktorego chcesz usunac: ");
+
+	if (fgets(szukane, sizeof(szukane), stdin) != NULL) {
+		szukane[strcspn(szukane, "\n")] = 0;
+	}
+	while (czyPoprawneImie(szukane) == 0) {
+		printf("Blad! Imie musi miec min. 4 znaki i same litery: ");
+		
+		if (fgets(szukane, sizeof(szukane), stdin) != NULL) {
+			szukane[strcspn(szukane, "\n")] = 0;
+		}
+	}
+
+	Bohater* current = *head;
+	Bohater* prev = NULL;
+
+	if (strcmp(current->dane.imie, szukane) == 0) {
+		*head = current->nastepny;
+		free(current);
+		printf("--> Usunieto bohatera: %s.\n", szukane);
+		return;
+	}
+
+	while (current != NULL && strcmp(current->dane.imie, szukane) != 0) {
+		prev = current;
+		current = current->nastepny;
+	}
+
+	if (current == NULL) {
+		printf("Podany bohater nie znajduje sie w rejestrze.\n");
+		return;
+	}
+
+	prev->nastepny = current->nastepny;
+	
+	free(current);
+
+	printf("--> Sukces! Usunieto bohatera: %s\n", szukane);
 }

@@ -81,7 +81,7 @@ int main() {
 				break;
 			}
 			case 5: {
-				printf("Usuwanie...");
+				usunBohatera(&rejestr);
 				break;
 			}
 			case 6: {

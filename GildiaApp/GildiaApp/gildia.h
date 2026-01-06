@@ -56,5 +56,7 @@ void wyszukajPoziom(Bohater* head);
 
 void modyfikacjaBohatera(Bohater* head);
 
+void usunBohatera(Bohater** head);
+
 
 #endif

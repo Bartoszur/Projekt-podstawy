@@ -1,4 +1,1 @@
-Adriann 5 4 1 50 0
-Thorin Debowa Tarcza 0 2 1 50 0
 Frieren 1 1 1 50 0
-Geralt 0 0 20 125 2
