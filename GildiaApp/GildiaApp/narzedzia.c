@@ -94,3 +94,23 @@ void wyczyscBufor(void) {
 	int c;
 	while ((c = getchar()) != '\n' && c != EOF);
 }
+
+int czySpelniaWarunki(Bohater* b, int opcja, int prog) {
+	switch (opcja) {
+		case 1: {
+			return(b->dane.klasa == prog);
+		}
+		case 2: {
+			return(b->dane.rasa == prog);
+		}
+		case 3: {
+			return(b->dane.poziom < prog);
+		}
+		case 4: {
+			return(b->dane.reputacja < prog);
+		}
+		case 5: {
+			return(b->dane.status == prog);
+		}
+	}
+}

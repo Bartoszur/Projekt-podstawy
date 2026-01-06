@@ -58,5 +58,7 @@ void modyfikacjaBohatera(Bohater* head);
 
 void usunBohatera(Bohater** head);
 
+void usunWieluBohaterow(Bohater** head);
+
 
 #endif

@@ -354,3 +354,78 @@ void usunBohatera(Bohater** head) {
 
 	printf("--> Sukces! Usunieto bohatera: %s\n", szukane);
 }
+
+void usunWieluBohaterow(Bohater** head) {
+	if (head == NULL || *head == NULL) {
+		printf("Lista jest pusta.\n");
+		return;
+	}
+
+	int opcja, wartosc;
+	printf("\n--- USUWANIE BOHATEROW ---\n");
+	printf("1. Usun bohaterow o danej KLASIE.\n");
+	printf("2. Usun bohaterow o danej RASIE.\n");
+	printf("3. Usun bohaterow ponizej danego POZIOMU.\n");
+	printf("4. Usun bohaterow ponizej poziomu REPUTACJI.\n");
+	printf("5. Usun bohaterow o danym STATUSIE.\n");
+	printf("0 - Powrot.\n");
+	printf("Wybierz kryterium: ");
+	opcja = wczytajLiczbe(0, 5);
+	if (opcja == 0) return;
+
+	switch (opcja) {
+		case 1: {
+			printf("Ktora klase chcesz usunac 0-WOJOWNIK\n 1-MAG\n 2-KAPLAN\n 3-LOTR\n 4-LOWCA\n 5-DRUID\n?: ");
+			wartosc = wczytajLiczbe(0, 5);
+			break;
+		}
+		case 2:{
+			printf("Ktora rase chcesz usunac (0-CZLOWIEK, 1-ELF, 2-KRASNOLUD, 3-DEMON, 4-ORK):?: ");
+			wartosc = wczytajLiczbe(0, 4);
+			break;
+		}
+		case 3: {
+			printf("Usunac bohaterow ponizej poziomu: ");
+			wartosc = wczytajLiczbe(1, 100);
+			break;
+		}
+		case 4: {
+			printf("Usunac bohaterow ponizej reputacji: ");
+			wartosc = wczytajLiczbe(-50, 150);
+		}
+		case 5: {
+			printf("Podaj status do usuniecia (0-AKTYWNY, 1-NA_MISJI, 2-RANNY, 3-ZAGINIONY, 4-ZAWIESZONY): ");
+			break;
+		}
+	}
+
+	int licznik = 0;
+	
+	while (*head != NULL && czySpelniaWarunki(*head, opcja, prog)) {
+		Bohater* doUsuniecia = *head;
+		*head = (*head)->nastepny;
+		free(doUsuniecia);
+		licznik++;
+	}
+
+	if (*head == NULL) {
+		printf("--> Usunieto %d bohaterow. Lista jest pusta.\n", licznik);
+		return;
+	}
+
+	Bohater* current = *head;
+
+	while (current->nastepny != NULL) {
+		if (czySpelniaWarunki(current->nastepny, opcja, wartosc)) {
+			Bohater* doUsuniecia = current->nastepny;
+			current->nastepny = doUsuniecia->nastepny;
+			free(doUsuniecia);
+			licznik++;
+		}
+		else {
+			current = current->nastepny;
+		}
+	}
+	printf("--> Zakonczono. Usunieto lacznie %d bohaterow.\n", licznik);
+
+}

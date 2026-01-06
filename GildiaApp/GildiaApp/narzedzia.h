@@ -15,4 +15,6 @@ int czyPoprawneWyszukanie(const char* tekst);
 
 void wyczyscBufor(void);
 
+int czySpelniaWarunki(Bohater* b, int opcja, int prog);
+
 #endif
