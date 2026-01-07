@@ -56,7 +56,6 @@ int main(int argc, char* argv[]) {
 
 		switch (wybor) {
 			case 1: {
-				printf("dodawanie nowego bohatera...\n");
 				dodajBohatera(&rejestr);
 				break;
 			}
@@ -130,6 +129,9 @@ int main(int argc, char* argv[]) {
 			}
 		}
 	}
+
+	zwolnijPamiec(rejestr);
+	rejestr = NULL;
 
 	return 0;
 }

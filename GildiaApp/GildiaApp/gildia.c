@@ -13,7 +13,6 @@ void dodajBohatera(Bohater** head) {
 
 	Bohater* nowy = malloc(sizeof(Bohater));
 	int tworzenie = 1;
-	wyczyscBufor();
 	
 	if (nowy == NULL) {
 		return;
@@ -32,7 +31,7 @@ void dodajBohatera(Bohater** head) {
 					printf("Blad! Imie musi miec min. 4 znaki i same litery.\n");
 			}
 			else if(czyUnikalne(*head, nowy->dane.imie) == 0){
-					printf("Blad: Taki bohater juz istnieje! Wymyœl inne imie.\n");
+					printf("Blad: Taki bohater juz istnieje! Wymysl inne imie.\n");
 			}
 			else {
 					tworzenie = 0;
@@ -90,13 +89,13 @@ void wyswietlRejestr(Bohater* head) {
 		return;
 	}
 
-	printf("\n%-3s | %-20s | %-8s | %-9s | %-6s | %-10s | %-10s\n",
+	printf("\n%-3s | %-25s | %-8s | %-9s | %-6s | %-13s | %-10s\n",
 		"Nr.", "Imie Bohatera", "Klasa", "Rasa", "Poziom", "Reputacja", "Status");
 
 	int nr = 1;
 	
 	while (current != NULL) {
-		printf("%-3d | %-20s | %-8s | %-9s | %-6d | %-10s | %-10s\n",
+		printf("%-3d | %-25s | %-8s | %-9s | %-6d | %-13s | %-10s\n",
 			nr,
 			current->dane.imie,
 			nazwyKlas[current->dane.klasa],
@@ -139,7 +138,7 @@ void wczytajPlik(Bohater** head, const char* nazwaPliku) {
 		*head = nowy;
 	}
 	fclose(f);
-	printf("--> Wczytano dane z pliku 'Rejestr.txt'.\n");
+	printf("--> Wczytano dane z pliku %s.\n", nazwaPliku);
 }
 
 void wyszukajImie(Bohater* head) {
@@ -402,9 +401,11 @@ void usunWieluBohaterow(Bohater** head) {
 		case 4: {
 			printf("Usunac bohaterow ponizej reputacji: ");
 			wartosc = wczytajLiczbe(-50, 150);
+			break;
 		}
 		case 5: {
 			printf("Podaj status do usuniecia (0-AKTYWNY, 1-NA_MISJI, 2-RANNY, 3-ZAGINIONY, 4-ZAWIESZONY): ");
+			wartosc = wczytajLiczbe(0, 4);
 			break;
 		}
 	}
@@ -433,7 +434,7 @@ void usunWieluBohaterow(Bohater** head) {
 	while (current->nastepny != NULL) {
 		if (czySpelniaWarunki(current->nastepny, opcja, wartosc)) {
 			if (current->nastepny->dane.status == NA_MISJI) {
-				printf("Pominieto: %s (jest na misji).\n", (*head)->dane.imie);
+				printf("Pominieto: %s (jest na misji).\n", current->nastepny->dane.imie);
 				current = current->nastepny;
 			}
 			else {

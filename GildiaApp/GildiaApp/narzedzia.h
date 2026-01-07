@@ -17,4 +17,6 @@ void wyczyscBufor(void);
 
 int czySpelniaWarunki(Bohater* b, int opcja, int prog);
 
+void zwolnijPamiec(Bohater* head);
+
 #endif

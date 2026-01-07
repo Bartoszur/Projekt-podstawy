@@ -113,4 +113,15 @@ int czySpelniaWarunki(Bohater* b, int opcja, int prog) {
 			return(b->dane.status == prog);
 		}
 	}
+	return 0;
+}
+
+void zwolnijPamiec(Bohater* head) {
+	Bohater* temp;
+
+	while (head != NULL) {
+		temp = head;
+		head = head->nastepny;
+		free(temp);
+	}
 }
