@@ -63,8 +63,8 @@ int main() {
 				}
 				else {
 					int n = -1;
-					printf("1 - wyszukaj wedlug imienia.\n");
-					printf("2 - wyszukaj wedlug poziomu.\n");
+					printf("1. wyszukaj wedlug imienia.\n");
+					printf("2. wyszukaj wedlug poziomu.\n");
 					printf("Twoj wybor: ");
 					n = wczytajLiczbe(1, 2);
 					if (n == 1) {
@@ -81,11 +81,38 @@ int main() {
 				break;
 			}
 			case 5: {
-				usunBohatera(&rejestr);
+				if (rejestr == NULL) {
+					printf("Brak bohaterow do usuniecia.\n");
+				}
+				else {
+					int n = -1;
+					printf("1. Usuwanie pojedynczego bohatera po imienu.\n");
+					printf("2. Usuwanie bohaterow pasujacych do kryterium.\n");
+					printf("Twoj wybor: ");
+					n = wczytajLiczbe(1, 2);
+					if (n == 1) {
+						usunBohatera(&rejestr);
+					}
+					else if(n == 2){
+						usunWieluBohaterow(&rejestr);
+					}
+				}
 				break;
 			}
 			case 6: {
-				printf("Sortowanie...");
+				if (rejestr == NULL) {
+					printf("Lista jest pusta.\n");
+				}
+				else {
+					int opcja = -1;
+					printf("Jak chcesz posortowac liste?\n");
+					printf("1. Alfabetycznie\n");
+					printf("2. Poziomowo\n");
+					printf("Twoj wybor: ");
+					opcja = wczytajLiczbe(1, 2);
+					sortowanie(&rejestr, opcja);
+					wyswietlRejestr(rejestr);
+				}
 				break;
 			}
 			case 7: {

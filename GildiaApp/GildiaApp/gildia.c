@@ -18,28 +18,28 @@ void dodajBohatera(Bohater** head) {
 		return;
 	}
 
-		while (tworzenie) {
-			printf("\n--- TWORZENIE NOWEGO BOHATERA ---\n");
+	while (tworzenie) {
+		printf("\n--- TWORZENIE NOWEGO BOHATERA ---\n");
 
-			printf("Podaj imie bohatera (tylko litery, min. 4 znaki): ");
+		printf("Podaj imie bohatera (tylko litery, min. 4 znaki): ");
 
-			if (fgets(nowy->dane.imie, sizeof(nowy->dane.imie), stdin) != NULL) {
+		if (fgets(nowy->dane.imie, sizeof(nowy->dane.imie), stdin) != NULL) {
 
-				nowy->dane.imie[strcspn(nowy->dane.imie, "\n")] = 0;
+			nowy->dane.imie[strcspn(nowy->dane.imie, "\n")] = 0;
 
-				if (czyPoprawneImie(nowy->dane.imie) == 0) {
+			if (czyPoprawneImie(nowy->dane.imie) == 0) {
 					printf("Blad! Imie musi miec min. 4 znaki i same litery.\n");
-				}
-				else if(czyUnikalne(*head, nowy->dane.imie) == 0){
+			}
+			else if(czyUnikalne(*head, nowy->dane.imie) == 0){
 					printf("Blad: Taki bohater juz istnieje! Wymyœl inne imie.\n");
-				}
-				else {
+			}
+			else {
 					tworzenie = 0;
-				}
 			}
 		}
+	}
 
-	printf("Wybierz klase 0-WOJOWNIK\n 1-MAG\n 2-KAPLAN\n 3-LOTR\n 4-LOWCA\n 5-DRUID\n: ");
+	printf("Wybierz klase (0-WOJOWNIK, 1-MAG, 2-KAPLAN, 3-LOTR, 4-LOWCA, 5-DRUID): ");
 	nowy->dane.klasa = (Klasa)wczytajLiczbe(0, 5);
 		
 	printf("Wybierz rase (0-CZLOWIEK, 1-ELF, 2-KRASNOLUD, 3-DEMON, 4-ORK): ");
@@ -268,7 +268,7 @@ void modyfikacjaBohatera(Bohater* head) {
 
 		switch (wybor) {
 			case 1: {
-				printf("Wybierz nowa klase 0-WOJOWNIK\n 1-MAG\n 2-KAPLAN\n 3-LOTR\n 4-LOWCA\n 5-DRUID\n");
+				printf("Wybierz nowa klase (0-WOJOWNIK, 1-MAG, 2-KAPLAN, 3-LOTR, 4-LOWCA, 5-DRUID): ");
 				current->dane.klasa = wczytajLiczbe(0, 5);
 				printf("---> Zmieniono klase.\n");
 				break;
@@ -368,40 +368,40 @@ void usunWieluBohaterow(Bohater** head) {
 	printf("3. Usun bohaterow ponizej danego POZIOMU.\n");
 	printf("4. Usun bohaterow ponizej poziomu REPUTACJI.\n");
 	printf("5. Usun bohaterow o danym STATUSIE.\n");
-	printf("0 - Powrot.\n");
+	printf("0. - Powrot.\n");
 	printf("Wybierz kryterium: ");
 	opcja = wczytajLiczbe(0, 5);
 	if (opcja == 0) return;
 
 	switch (opcja) {
-		case 1: {
-			printf("Ktora klase chcesz usunac 0-WOJOWNIK\n 1-MAG\n 2-KAPLAN\n 3-LOTR\n 4-LOWCA\n 5-DRUID\n?: ");
-			wartosc = wczytajLiczbe(0, 5);
-			break;
-		}
-		case 2:{
-			printf("Ktora rase chcesz usunac (0-CZLOWIEK, 1-ELF, 2-KRASNOLUD, 3-DEMON, 4-ORK):?: ");
-			wartosc = wczytajLiczbe(0, 4);
-			break;
-		}
-		case 3: {
-			printf("Usunac bohaterow ponizej poziomu: ");
-			wartosc = wczytajLiczbe(1, 100);
-			break;
-		}
-		case 4: {
-			printf("Usunac bohaterow ponizej reputacji: ");
-			wartosc = wczytajLiczbe(-50, 150);
-		}
-		case 5: {
-			printf("Podaj status do usuniecia (0-AKTYWNY, 1-NA_MISJI, 2-RANNY, 3-ZAGINIONY, 4-ZAWIESZONY): ");
-			break;
-		}
+	case 1: {
+		printf("Ktora klase chcesz usunac (0-WOJOWNIK, 1-MAG, 2-KAPLAN, 3-LOTR, 4-LOWCA, 5-DRUID)?: ");
+		wartosc = wczytajLiczbe(0, 5);
+		break;
+	}
+	case 2: {
+		printf("Ktora rase chcesz usunac (0-CZLOWIEK, 1-ELF, 2-KRASNOLUD, 3-DEMON, 4-ORK):?: ");
+		wartosc = wczytajLiczbe(0, 4);
+		break;
+	}
+	case 3: {
+		printf("Usunac bohaterow ponizej poziomu: ");
+		wartosc = wczytajLiczbe(1, 100);
+		break;
+	}
+	case 4: {
+		printf("Usunac bohaterow ponizej reputacji: ");
+		wartosc = wczytajLiczbe(-50, 150);
+	}
+	case 5: {
+		printf("Podaj status do usuniecia (0-AKTYWNY, 1-NA_MISJI, 2-RANNY, 3-ZAGINIONY, 4-ZAWIESZONY): ");
+		break;
+	}
 	}
 
 	int licznik = 0;
-	
-	while (*head != NULL && czySpelniaWarunki(*head, opcja, prog)) {
+
+	while (*head != NULL && czySpelniaWarunki(*head, opcja, wartosc)) {
 		Bohater* doUsuniecia = *head;
 		*head = (*head)->nastepny;
 		free(doUsuniecia);
@@ -428,4 +428,80 @@ void usunWieluBohaterow(Bohater** head) {
 	}
 	printf("--> Zakonczono. Usunieto lacznie %d bohaterow.\n", licznik);
 
+}
+
+Bohater* wstawSortowanie(Bohater* headSorted, Bohater* nowy, int opcja) {
+	int poczatek = 0;
+
+	if (headSorted == NULL) {
+		poczatek = 1;
+	}
+	else if (opcja == 1) {
+		if (strcmp(nowy->dane.imie, headSorted->dane.imie) < 0) {
+			poczatek = 1;
+		}
+	}
+	else if (opcja == 2) {
+		if (nowy->dane.poziom > headSorted->dane.poziom) {
+			poczatek = 1;
+		}
+	}
+
+	if (poczatek == 1) {
+		nowy->nastepny = headSorted;
+		return nowy;
+	}
+
+	Bohater* current = headSorted;
+
+	while (current->nastepny != NULL) {
+		int wstaw = 0;
+
+		if (opcja == 1) {
+			if (strcmp(nowy->dane.imie, current->nastepny->dane.imie) < 0) {
+				wstaw = 1;
+			}
+		}
+		else if (opcja == 2) {
+			if (nowy->dane.poziom > current->nastepny->dane.poziom) {
+				wstaw = 1;
+			}
+		}
+
+		if (wstaw == 1) {
+			break;
+		}
+
+		current = current->nastepny;
+	}
+
+	nowy->nastepny = current->nastepny;
+	current->nastepny = nowy;
+
+	return headSorted;
+}
+
+void sortowanie(Bohater** headSort, int opcja) {
+	Bohater* nieSortowana = *headSort;
+
+	if (nieSortowana == NULL || nieSortowana->nastepny == NULL) {
+		printf("Lista nie wymaga sortowania.\n");
+		return;
+	}
+
+	Bohater* posortowanaLista = NULL;
+
+	while (nieSortowana != NULL) {
+		Bohater* next = nieSortowana->nastepny;
+
+		nieSortowana->nastepny = NULL;
+
+		posortowanaLista = wstawSortowanie(posortowanaLista, nieSortowana, opcja);
+
+		nieSortowana = next;
+	}
+
+	*headSort = posortowanaLista;
+
+	printf("--> Sortowanie zakonczone sukcesem!\n");
 }

@@ -60,5 +60,8 @@ void usunBohatera(Bohater** head);
 
 void usunWieluBohaterow(Bohater** head);
 
+Bohater* wstawSortowanie(Bohater* headSorted, Bohater* nowy, int opcja);
+
+void sortowanie(Bohater** headSort, int opcja);
 
 #endif
