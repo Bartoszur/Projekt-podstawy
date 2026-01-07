@@ -44,11 +44,11 @@ typedef struct ElementListy {
 
 void dodajBohatera(Bohater** head);
 
-void zapiszRejestr(Bohater* head);
+void zapiszRejestr(Bohater* head, const char* nazwaPliku);
 
 void wyswietlRejestr(Bohater* head);
 
-void wczytajPlik(Bohater** head);
+void wczytajPlik(Bohater** head, const char* nazwaPliku);
 
 void wyszukajImie(Bohater* head);
 

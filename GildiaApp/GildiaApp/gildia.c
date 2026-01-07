@@ -13,6 +13,7 @@ void dodajBohatera(Bohater** head) {
 
 	Bohater* nowy = malloc(sizeof(Bohater));
 	int tworzenie = 1;
+	wyczyscBufor();
 	
 	if (nowy == NULL) {
 		return;
@@ -55,8 +56,8 @@ void dodajBohatera(Bohater** head) {
 	printf("--> Sukces! Bohater %s stworzony.\n", nowy->dane.imie);
 }
 
-void zapiszRejestr(Bohater* head) {
-	FILE *f = fopen("rejestr.txt", "w");
+void zapiszRejestr(Bohater* head, const char* nazwaPliku) {
+	FILE *f = fopen(nazwaPliku, "w");
 	if (f == NULL) {
 		printf("Blad: Nie udalo sie otworzyc pliku do zapisu!\n");
 		return;
@@ -109,8 +110,8 @@ void wyswietlRejestr(Bohater* head) {
 	}
 }
 	
-void wczytajPlik(Bohater** head) {
-	FILE *f = fopen("rejestr.txt", "r");
+void wczytajPlik(Bohater** head, const char* nazwaPliku) {
+	FILE *f = fopen(nazwaPliku, "r");
 
 	if (f == NULL) {
 		return;
@@ -333,6 +334,10 @@ void usunBohatera(Bohater** head) {
 
 	if (strcmp(current->dane.imie, szukane) == 0) {
 		*head = current->nastepny;
+		if (current->dane.status == NA_MISJI) {
+			printf("BLAD: Nie mozna usunac bohatera %s - jest w trakcie misji!\n", current->dane.imie);
+			return; 
+		}
 		free(current);
 		printf("--> Usunieto bohatera: %s.\n", szukane);
 		return;
@@ -345,6 +350,11 @@ void usunBohatera(Bohater** head) {
 
 	if (current == NULL) {
 		printf("Podany bohater nie znajduje sie w rejestrze.\n");
+		return;
+	}
+
+	if (current->dane.status == NA_MISJI) {
+		printf("BLAD: Nie mozna usunac bohatera %s - jest w trakcie misji!\n", current->dane.imie);
 		return;
 	}
 
@@ -374,39 +384,44 @@ void usunWieluBohaterow(Bohater** head) {
 	if (opcja == 0) return;
 
 	switch (opcja) {
-	case 1: {
-		printf("Ktora klase chcesz usunac (0-WOJOWNIK, 1-MAG, 2-KAPLAN, 3-LOTR, 4-LOWCA, 5-DRUID)?: ");
-		wartosc = wczytajLiczbe(0, 5);
-		break;
-	}
-	case 2: {
-		printf("Ktora rase chcesz usunac (0-CZLOWIEK, 1-ELF, 2-KRASNOLUD, 3-DEMON, 4-ORK):?: ");
-		wartosc = wczytajLiczbe(0, 4);
-		break;
-	}
-	case 3: {
-		printf("Usunac bohaterow ponizej poziomu: ");
-		wartosc = wczytajLiczbe(1, 100);
-		break;
-	}
-	case 4: {
-		printf("Usunac bohaterow ponizej reputacji: ");
-		wartosc = wczytajLiczbe(-50, 150);
-	}
-	case 5: {
-		printf("Podaj status do usuniecia (0-AKTYWNY, 1-NA_MISJI, 2-RANNY, 3-ZAGINIONY, 4-ZAWIESZONY): ");
-		break;
-	}
+		case 1: {
+			printf("Ktora klase chcesz usunac (0-WOJOWNIK, 1-MAG, 2-KAPLAN, 3-LOTR, 4-LOWCA, 5-DRUID)?: ");
+			wartosc = wczytajLiczbe(0, 5);
+			break;
+		}
+		case 2: {
+			printf("Ktora rase chcesz usunac (0-CZLOWIEK, 1-ELF, 2-KRASNOLUD, 3-DEMON, 4-ORK):?: ");
+			wartosc = wczytajLiczbe(0, 4);
+			break;
+		}
+		case 3: {
+			printf("Usunac bohaterow ponizej poziomu: ");
+			wartosc = wczytajLiczbe(1, 100);
+			break;
+		}
+		case 4: {
+			printf("Usunac bohaterow ponizej reputacji: ");
+			wartosc = wczytajLiczbe(-50, 150);
+		}
+		case 5: {
+			printf("Podaj status do usuniecia (0-AKTYWNY, 1-NA_MISJI, 2-RANNY, 3-ZAGINIONY, 4-ZAWIESZONY): ");
+			break;
+		}
 	}
 
 	int licznik = 0;
 
 	while (*head != NULL && czySpelniaWarunki(*head, opcja, wartosc)) {
+		if ((*head)->dane.status == NA_MISJI) {
+			printf("Pominieto: %s (jest na misji, nie mozna usunac).\n", (*head)->dane.imie);
+			break;
+		}
+
 		Bohater* doUsuniecia = *head;
 		*head = (*head)->nastepny;
 		free(doUsuniecia);
 		licznik++;
-	}
+	}	
 
 	if (*head == NULL) {
 		printf("--> Usunieto %d bohaterow. Lista jest pusta.\n", licznik);
@@ -417,10 +432,16 @@ void usunWieluBohaterow(Bohater** head) {
 
 	while (current->nastepny != NULL) {
 		if (czySpelniaWarunki(current->nastepny, opcja, wartosc)) {
-			Bohater* doUsuniecia = current->nastepny;
-			current->nastepny = doUsuniecia->nastepny;
-			free(doUsuniecia);
-			licznik++;
+			if (current->nastepny->dane.status == NA_MISJI) {
+				printf("Pominieto: %s (jest na misji).\n", (*head)->dane.imie);
+				current = current->nastepny;
+			}
+			else {
+				Bohater* doUsuniecia = current->nastepny;
+				current->nastepny = doUsuniecia->nastepny;
+				free(doUsuniecia);
+				licznik++;
+			}
 		}
 		else {
 			current = current->nastepny;

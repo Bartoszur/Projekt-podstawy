@@ -34,12 +34,19 @@ int pobierzWybor() {
 }
 
 
-int main() {
+int main(int argc, char* argv[]) {
+	if (argc < 2) {
+		printf("BLAD: Nie podano nazwy pliku bazy danych!\n");
+		printf("Uzycie: %s <nazwa_pliku.txt>\n", argv[0]);
+		return 1;
+	}
+	const char* nazwaPliku = argv[1];
+
 	int running = 1;
 	int wybor;
 	Bohater* rejestr = NULL;
 
-	wczytajPlik(&rejestr);
+	wczytajPlik(&rejestr, nazwaPliku);
 
 	przywitanie();
 	
@@ -116,8 +123,8 @@ int main() {
 				break;
 			}
 			case 7: {
-				zapiszRejestr(rejestr);
-				printf("Zapisano rejestr...");
+				zapiszRejestr(rejestr, nazwaPliku);
+				printf("Zapisano rejestr do pliku '%s'.\n", nazwaPliku);
 				running = 0;
 				break;
 			}
