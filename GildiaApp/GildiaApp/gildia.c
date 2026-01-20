@@ -61,10 +61,18 @@ void zapiszRejestr(Bohater* head, const char* nazwaPliku) {
 		printf("Blad: Nie udalo sie otworzyc pliku do zapisu!\n");
 		return;
 	}
+
 	Bohater* current = head;
 	while (current != NULL) {
+		char imieDoZapisu[100];
+		strcpy(imieDoZapisu, current->dane.imie);
+
+		for (int i = 0; imieDoZapisu[i] != '\0'; i++) {
+			if (imieDoZapisu[i] == ' ') imieDoZapisu[i] = '_';
+		}
+
 		fprintf(f, "%s %d %d %d %d %d\n",
-			current->dane.imie,
+			imieDoZapisu,
 			current->dane.klasa,
 			current->dane.rasa,
 			current->dane.poziom,
@@ -124,9 +132,14 @@ void wczytajPlik(Bohater** head, const char* nazwaPliku) {
 
 		Bohater* nowy = malloc(sizeof(Bohater));
 
+		for (int i = 0; buforImie[i] != '\0'; i++) {
+			if (buforImie[i] == '_') buforImie[i] = ' ';
+		}
+
 		if (nowy == NULL) {
 			break;
 		}
+
 		strcpy(nowy->dane.imie, buforImie);
 		nowy->dane.klasa = (Klasa)bKlasa;
 		nowy->dane.rasa = (Rasa)bRasa;
@@ -314,7 +327,6 @@ void usunBohatera(Bohater** head) {
 	}
 
 	char szukane[100];
-	int zgodne = 0;
 	printf("Podaj imie bohatera, ktorego chcesz usunac: ");
 
 	if (fgets(szukane, sizeof(szukane), stdin) != NULL) {
@@ -332,11 +344,11 @@ void usunBohatera(Bohater** head) {
 	Bohater* prev = NULL;
 
 	if (strcmp(current->dane.imie, szukane) == 0) {
-		*head = current->nastepny;
 		if (current->dane.status == NA_MISJI) {
 			printf("BLAD: Nie mozna usunac bohatera %s - jest w trakcie misji!\n", current->dane.imie);
 			return; 
 		}
+		*head = current->nastepny;
 		free(current);
 		printf("--> Usunieto bohatera: %s.\n", szukane);
 		return;
