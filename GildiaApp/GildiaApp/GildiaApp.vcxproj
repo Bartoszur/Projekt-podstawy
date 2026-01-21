@@ -128,11 +128,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="gildia.c" />
+    <ClCompile Include="interfejs.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="narzedzia.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="gildia.h" />
+    <ClInclude Include="interfejs.h" />
     <ClInclude Include="narzedzia.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

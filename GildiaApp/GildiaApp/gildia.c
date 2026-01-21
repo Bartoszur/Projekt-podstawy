@@ -160,6 +160,10 @@ void wyszukajImie(Bohater* head) {
 		return;
 	}
 	
+	const char* nazwyKlas[] = { "WOJOWNIK", "MAG", "KAPLAN", "LOTRZYK", "LOWCA", "DRUID" };
+	const char* nazwyRas[] = { "CZLOWIEK", "ELF", "KRASNOLUD", "DEMON", "ORK" };
+	const char* Statusy[] = { "AKTYWNY", "NA_MISJI", "RANNY", "ZAGINIONY", "ZAWIESZONY" };
+
 	char szukane[100];
 
 	printf("Wpisz poczatek imienia bohatera: ");
@@ -181,11 +185,22 @@ void wyszukajImie(Bohater* head) {
 
 	Bohater* current = head;
 	int nr = 1;
+	
+	printf("\n--- WYNIKI WYSZUKIWANIA ---\n");
+	printf("%-3s | %-25s | %-8s | %-9s | %-6s | %-13s | %-10s\n",
+		"Nr.", "Imie Bohatera", "Klasa", "Rasa", "Poziom", "Reputacja", "Status");
 
 	while (current != NULL) {
-
 		if (strncmp(current->dane.imie, szukane, dlugosc) == 0) {
-			printf("%d %s\n", nr, current->dane.imie);
+			printf("%-3d | %-25s | %-8s | %-9s | %-6d | %-13s | %-10s\n",
+				nr,
+				current->dane.imie,
+				nazwyKlas[current->dane.klasa],
+				nazwyRas[current->dane.rasa],
+				current->dane.poziom,
+				ocenReputacje(current->dane.reputacja),
+				Statusy[current->dane.status]
+			);
 			znalezione = 1;
 		}
 		current = current->nastepny;
@@ -204,6 +219,10 @@ void wyszukajPoziom(Bohater* head) {
 		return;
 	}
 
+	const char* nazwyKlas[] = { "WOJOWNIK", "MAG", "KAPLAN", "LOTRZYK", "LOWCA", "DRUID" };
+	const char* nazwyRas[] = { "CZLOWIEK", "ELF", "KRASNOLUD", "DEMON", "ORK" };
+	const char* Statusy[] = { "AKTYWNY", "NA_MISJI", "RANNY", "ZAGINIONY", "ZAWIESZONY" };
+
 	int szukane;
 	printf("Jaki poziom chcesz wyszukac (1-100): ");
 	szukane = wczytajLiczbe(0, 100);
@@ -213,9 +232,21 @@ void wyszukajPoziom(Bohater* head) {
 	Bohater* current = head;
 	int nr = 1;
 
+	printf("\n--- WYNIKI WYSZUKIWANIA (POZIOM %d) ---\n", szukane);
+	printf("%-3s | %-25s | %-8s | %-9s | %-6s | %-13s | %-10s\n",
+		"Nr.", "Imie Bohatera", "Klasa", "Rasa", "Poziom", "Reputacja", "Status");
+
 	while (current != NULL) {
 		if (current->dane.poziom == szukane) {
-			printf("%d %s poziom - %d\n", nr, current->dane.imie, szukane);
+			printf("%-3d | %-25s | %-8s | %-9s | %-6d | %-13s | %-10s\n",
+				nr,
+				current->dane.imie,
+				nazwyKlas[current->dane.klasa],
+				nazwyRas[current->dane.rasa],
+				current->dane.poziom,
+				ocenReputacje(current->dane.reputacja),
+				Statusy[current->dane.status]
+			);
 			znalezione = 1;
 		}
 		current = current->nastepny;
